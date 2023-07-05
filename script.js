@@ -1,34 +1,33 @@
+const container = document.getElementById("carta");
+const row = document.createElement("div");
+row.classList.add("row");
 
-// prendiamo la temperatura max e min di Roma per oggi!
+fetch("https://striveschool-api.herokuapp.com/books")
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(book => {
+      const title = book.title;
+      const price = book.price;
+      const image = book.img;
 
-const getLibri = function () {
-    fetch('https://striveschool-api.herokuapp.com/books'
-    )
-      .then((res) => {
-        if (res.ok) {
-        
-          return res.json()
-        } else {
-          if (res.status === 404) {
-            throw new Error('Not found')
-          } else if (res.status === 500) {
-            throw new Error('Internal Server Error')
-          } else {
-            throw new Error('Errore nella chiamata API')
-          }
-        }
-      })
-      .then((data) => {
-        console.log(data)
-        let spinnerContainer = document.getElementById('spinner-container')
-        spinnerContainer.classList.add('d-none')
-        //   prendo un riferimento alla colonna
-        let cardImg = document.querySelector('img')
-        cardImg.setAttribute()
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-  
-getLibri()
+      const card = document.createElement("div");
+      card.classList.add("col");
+
+      const cardContent = `
+        <div class="card" style="width: 14rem">
+          <img src="${image}" class="card-img-top" alt="${title}" />
+
+          <div class="card-body">
+            <h5 class="card-title">${title}</h5>
+            <p class="card-text">Price: ${price}</p>
+            <a href="#" class="btn btn-primary">Add to cart</a>
+          </div>
+        </div>
+      `;
+      card.innerHTML = cardContent;
+      row.appendChild(card);
+    });
+
+    container.appendChild(row);
+  })
+  .catch(error => console.error(error));
