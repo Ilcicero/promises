@@ -20,11 +20,17 @@ fetch("https://striveschool-api.herokuapp.com/books")
           <div class="card-body">
             <h5 class="card-title">${title}</h5>
             <p class="card-text">Price: ${price}</p>
-            <a href="#" class="btn btn-primary">Add to cart</a>
+            <button class="btn btn-primary">SCARTA</button>
           </div>
         </div>
       `;
       card.innerHTML = cardContent;
+ 
+      const button = card.querySelector("button");
+      button.addEventListener("click", () => {
+        card.remove();  
+      });
+
       row.appendChild(card);
     });
 
